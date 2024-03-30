@@ -31,6 +31,12 @@ function ModelRow(props: iModel) {
 
     const [removeRow, setRemoveRow] = useState(false); 
 
+    const currentTime = new Date(); 
+    const oneWeekBefore = new Date(currentTime.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const runTime = props.runtime ? new Date(props.runtime) : null;
+    const isEarlier = runTime && runTime < oneWeekBefore; 
+    
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -103,6 +109,7 @@ function ModelRow(props: iModel) {
                 <IconButton onClick={toggleButton}><FavoriteIcon sx={{ color: "#2196f3" }} /></IconButton> :
                 <IconButton onClick={toggleButton}><FavoriteBorderOutlinedIcon sx={{ color: "#2196f3" }} /></IconButton>
             }</TableCell>
+            <TableCell align="left" sx={{ fontSize: '16px' }}>{isEarlier ? 'Not Completed' : 'Completed'}</TableCell>
         </TableRow>
     );
 }
