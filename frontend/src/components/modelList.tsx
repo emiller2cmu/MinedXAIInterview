@@ -8,7 +8,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ModelDataService from '../services/modelService'
 import IconButton from '@mui/material/IconButton';
-import './modelList.css'
 import ModelRow from "./modelRow";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -16,9 +15,6 @@ import Switch from '@mui/material/Switch';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
-
-
-
 
 interface iModel {
     "id": number
@@ -35,12 +31,12 @@ function ModelList() {
 
     const [listOfModels, setListOfModels] = useState<iModel[]>([]);
     const [filterFavorites, setFilterFavorites] = useState(true);
-    
-    const [refreshList, setRefreshList] = useState(false); 
+
+    const [refreshList, setRefreshList] = useState(false);
 
     const [open, setOpen] = useState(false);
 
-    function toggleFavorites() { 
+    function toggleFavorites() {
         setRefreshList(!refreshList);
         setFilterFavorites(!filterFavorites);
     }
@@ -80,13 +76,13 @@ function ModelList() {
             "favorite": false,
         }
         ModelDataService.create(newModel)
-        .then((response: any) => {
-            console.log(response.data);
-            setRefreshList(!refreshList);
-        })
-        .catch((e: Error) => {
-            console.log(e);
-        });
+            .then((response: any) => {
+                console.log(response.data);
+                setRefreshList(!refreshList);
+            })
+            .catch((e: Error) => {
+                console.log(e);
+            });
         handleClose();
         reset();
     };
@@ -169,18 +165,18 @@ function ModelList() {
                 </form>
             </Dialog>
             <div>
-                <TableContainer component={Paper} className="table">
+                <TableContainer component={Paper} sx={{ width: "70vw" }}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="left"><IconButton onClick={handleClickOpen}><AddCircleIcon /></IconButton></TableCell>
-                                <TableCell>Dataset Name</TableCell>
-                                <TableCell align="left">Run Time</TableCell>
-                                <TableCell align="left">Model Metric</TableCell>
-                                <TableCell align="left">Model Path</TableCell>
-                                <TableCell align="left">Training Loss</TableCell>
-                                <TableCell align="left">Validation Loss</TableCell>
-                                <TableCell align="left">Notes</TableCell>
+                                <TableCell align="left"><IconButton onClick={handleClickOpen}><AddCircleIcon sx={{ color: "#4FC828" }} /></IconButton></TableCell>
+                                <TableCell sx={{ fontSize: '16px' }}><b>Dataset Name</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Run Time</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Model Metric</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Model Path</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Training Loss</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Validation Loss</b></TableCell>
+                                <TableCell align="left" sx={{ fontSize: '16px' }}><b>Notes</b></TableCell>
                                 <TableCell align="left">Favorite
                                     <FormGroup>
                                         <FormControlLabel onClick={toggleFavorites} control={<Switch defaultChecked />} label="" />
