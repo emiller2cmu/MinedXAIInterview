@@ -13,6 +13,7 @@ import './modelList.css'
 import ModelRow from "./modelRow";
 
 interface iModel{ 
+    "id": number
     "name": string; 
     "runtime"?: Date | undefined; 
     "modelMetric": string; 
@@ -26,15 +27,13 @@ function ModelList() {
 
     const [listOfModels, setListOfModels] = useState<iModel[]>([]);
 
-    function toggleButton() {
-
-    }
 
     useEffect(() => {
         ModelDataService.getAll()
             .then((response: any) => {
                 console.log(response.data);
-                setListOfModels(response.data);
+                const sortedData = response.data.sort((a: iModel, b:iModel) => a.id - b.id);
+                setListOfModels(sortedData);
             })
             .catch((e: Error) => {
                 console.log(e);
@@ -58,7 +57,7 @@ function ModelList() {
         </TableHead>
         <TableBody>
           {listOfModels.map((row) => (
-            <ModelRow key={row.name} name={row.name} runtime={row.runtime} modelMetric={row.modelMetric} modelPath={row.modelPath}
+            <ModelRow id={row.id} name={row.name} runtime={row.runtime} modelMetric={row.modelMetric} modelPath={row.modelPath}
                 trainingLoss={row.trainingLoss} validationLoss={row.validationLoss} notes={row.notes} favorite={row.favorite}
             />
           ))}

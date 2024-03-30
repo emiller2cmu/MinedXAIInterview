@@ -1,5 +1,17 @@
 import http from "../http-common";
 
+interface iModel{ 
+  "id": number
+  "name": string; 
+  "runtime"?: Date | undefined; 
+  "modelMetric": string; 
+  "modelPath": string; 
+  "trainingLoss": number; 
+  "validationLoss": number; 
+  "notes": string; 
+  "favorite": boolean; 
+}
+
 class ModelDataService {
   getAll() {
     return http.get("/models");
@@ -13,8 +25,8 @@ class ModelDataService {
     return http.post(`/models`);
   }
 
-  update(id: string) {
-    return http.put(`/models/${id}`);
+  update(id: string, data: iModel) {
+    return http.put(`/models/${id}`, data);
   }
 
   delete(id: string) {
