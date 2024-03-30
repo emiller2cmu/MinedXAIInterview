@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "45884b4c-7434-4d8d-8128-a05ea7564746",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16440849"
+	},
+	"item": [
+		{
+			"name": "Get models",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/models/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"models",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a model",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"name\": \"Dataset 7\",\n    \"runtime\": \"2001-03-01T05:00:00.000Z\",\n    \"modelMetric\": \"Model\",\n    \"modelPath\": \"\",\n    \"trainingLoss\": 0,\n    \"validationLoss\": 0,\n    \"notes\": \"\",\n    \"favorite\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/models/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"models",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a model",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"id\": 10,\n    \"name\": \"Dataset 7\",\n    \"runtime\": \"2001-03-01T05:00:00.000Z\",\n    \"modelMetric\": \"Model\",\n    \"modelPath\": \"\",\n    \"trainingLoss\": 0,\n    \"validationLoss\": 0,\n    \"notes\": \"\",\n    \"favorite\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/models/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"models",
+						"10"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a model",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/models/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"models",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
