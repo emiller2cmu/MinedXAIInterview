@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ModelDataService from '../services/modelService'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import IconButton from '@mui/material/IconButton';
 import './modelList.css'
 import ModelRow from "./modelRow";
@@ -16,13 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, TextField } from '@mui/material';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateField } from '@mui/x-date-pickers/DateField';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useForm, Controller } from "react-hook-form";
-import dayjs from 'dayjs';
 
 
 
@@ -42,9 +35,15 @@ function ModelList() {
 
     const [listOfModels, setListOfModels] = useState<iModel[]>([]);
     const [filterFavorites, setFilterFavorites] = useState(true);
-    const toggleFavorites = () => setFilterFavorites(!filterFavorites);
+    
+    const [refreshList, setRefreshList] = useState(false); 
 
     const [open, setOpen] = useState(false);
+
+    function toggleFavorites() { 
+        setRefreshList(!refreshList);
+        setFilterFavorites(!filterFavorites);
+    }
 
 
     const handleClickOpen = () => {
@@ -55,22 +54,39 @@ function ModelList() {
         setOpen(false);
     };
 
-    
 
     useEffect(() => {
         ModelDataService.getAll()
             .then((response: any) => {
                 console.log(response.data);
-                const sortedData = response.data.sort((a: iModel, b: iModel) => a.id - b.id);
+                const sortedData = response.data.sort((a: iModel, b: iModel) => b.id - a.id);
                 setListOfModels(sortedData);
             })
             .catch((e: Error) => {
                 console.log(e);
             });
-    }, [])
+    }, [refreshList])
 
     const handleAdd = async (data: any) => {
-        console.log(data);
+        let newModel = {
+            "id": data.id,
+            "name": data.name,
+            "runtime": data.runtime,
+            "modelMetric": data.modelMetric,
+            "modelPath": data.modelPath,
+            "trainingLoss": data.trainingLoss,
+            "validationLoss": data.validationLoss,
+            "notes": data.notes,
+            "favorite": false,
+        }
+        ModelDataService.create(newModel)
+        .then((response: any) => {
+            console.log(response.data);
+            setRefreshList(!refreshList);
+        })
+        .catch((e: Error) => {
+            console.log(e);
+        });
         handleClose();
         reset();
     };

@@ -21,8 +21,8 @@ class ModelDataService {
     return http.get(`/models/${id}`);
   }
 
-  post() {
-    return http.post(`/models`);
+  create(data: iModel) {
+    return http.post(`/models`, data);
   }
 
   update(id: string, data: iModel) {
