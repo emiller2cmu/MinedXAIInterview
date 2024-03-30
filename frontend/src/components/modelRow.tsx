@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModelDataService from '../services/modelService';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface iModel {
     "id": number;
@@ -27,6 +28,8 @@ function ModelRow(props: iModel) {
 
     const [favorite, setFavorite] = useState(props.favorite);
     const [open, setOpen] = useState(false);
+
+    const [removeRow, setRemoveRow] = useState(false); 
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -61,9 +64,14 @@ function ModelRow(props: iModel) {
     return (
         <TableRow
             key={props.id}
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            sx={{ 
+                '&:last-child td, &:last-child th': { border: 0 },
+                '&:hover .deleteIcon': {
+                    visibility: 'visible'
+                }
+            }}
         >
-            <TableCell align="left"></TableCell>
+            <TableCell align="left"><IconButton className="deleteIcon" sx={{ visibility: 'hidden' }}><DeleteIcon></DeleteIcon></IconButton></TableCell>
             <TableCell align="left" sx={{ fontSize: '16px' }}>{props.name}</TableCell>
             <TableCell align="left" sx={{ fontSize: '16px' }}>{props.runtime?.toLocaleString()}</TableCell>
             <TableCell align="left" sx={{ fontSize: '16px' }}>{props.modelMetric}</TableCell>
